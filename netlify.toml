@@ -1,4 +1,4 @@
 [build]
-  base = 'bookly/'
+  base = 'dist/'
   command = 'python3 manage.py runserver'
-  publish = 'bookly/main_app'
+  publish = 'dist/main_app'
