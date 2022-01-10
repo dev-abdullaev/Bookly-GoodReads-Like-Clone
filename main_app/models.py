@@ -36,8 +36,6 @@ class Blog(models.Model):
     picture = models.ImageField(upload_to='blog/')
     body = models.TextField()
     slug = models.SlugField(max_length=250)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
 
     def __str__(self):
@@ -64,8 +62,7 @@ class Book(models.Model):
     slug = models.SlugField(max_length=250)
     is_active = models.BooleanField(default=True)
     is_new = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+
 
 
     def get_absolute_url(self):

@@ -7,8 +7,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from .models import Book, Blog, BookReview, Category, Favorite
-from .forms import BookReviewForm
+from main_app.models import Book, Blog, BookReview, Favorite
+from main_app.forms import BookReviewForm
 
 
 
