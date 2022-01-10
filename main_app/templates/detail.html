@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Book Detail Page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-3">
+            <img class="cover-pic" alt="cover image" src="{{ book.cover.url }}">
+        </div>
+
+        <div class="col-6 ms-3">
+            <h3>{{ book.name }}</h3>
+
+            <p>
+                {{ book.description }}
+            </p>
+            {% if is_added %}
+                <a href="{% url 'add_to_favorite' book.slug %}" name='clicked' class="btn disabled">Add to favorites</a>
+            {% else %}
+                <a href="{% url 'add_to_favorite' book.slug %}" class="btn">Add to favorites</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-6">
+            <form method="post" action="{% url 'reviews' book.slug %}">
+                {% csrf_token %}
+
+                {{ review_form | crispy }}
+
+                <button class="btn btn-success">Add review</button>
+            </form>
+
+        </div>
+    </div>
+
+    {% if book.bookreview_set.exists %}
+        <h4>Reviews</h4> <hr>
+
+        {% for review in book.bookreview_set.all %}
+            <div class="row mb-3">
+                <div class="col-1 me-2">
+                    <img class="small-profile-pic" src="{{ review.user.profile_picture.url }}">
+                </div>
+                <div class="col-10">
+                        <b>{{ review.user.username }}</b>
+                        rated it <input id="star-rating-1" name="star-rating-1" class="rating rating-loading" value="{{review.stars_given}}" data-min="0" data-max="5" data-step="0.5" data-size="xs">
+                        <span class="fw-lighter">on {{ review.created_at }}</span>
+                    <p class="mt-2 font-monospace">{{ review.comment }}</p>
+                    
+                </div>
+                
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}

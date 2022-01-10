@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Favorite Books{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <h1 class='text-center mb-4'>My Favorite Books</h1>
+
+        <div class="row mb-5">
+            {% for fav in favorites %}
+
+                <div class="col-2 me-4 mb-5">
+                    <img class="cover-pic" src="{{ fav.book.cover.url }}">
+                </div>
+
+                <div class="col-3 ms-5 mt-5">
+                    <a href="{% url 'detail' fav.book.slug %}">{{ fav.book.name }}</a>
+                    <p>{{ fav.book.description }}</p>
+                    <a href="{% url 'delete_fav_book' fav.book.slug %}" type='submit' class="btn">Remove</a>
+                </div>
+                
+
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+{% endblock %}
