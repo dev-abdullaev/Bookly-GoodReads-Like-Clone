@@ -1,4 +1,4 @@
 [build]
   base = 'dist/'
   command = 'python3 manage.py runserver'
-  publish = 'dist/main_app'
+  publish = 'dist/publish'
