@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <h1 class='text-center mb-4'>Books</h1>
+    <h1 class='text-center mb-4'>All Books</h1>
 
 
     {% if page_obj %}
@@ -12,7 +12,9 @@
         {% for book in page_obj.object_list %}
              
             <div class="col-2 me-3 mb-5">
-                <img class="cover-pic" src="{{ book.cover.url }}">
+                <a href="{% url 'detail' book.slug %}">
+                    <img class="cover-pic" src="{{ book.cover.url }}">
+                </a>
             </div>
 
             <div class="col-3 ms-5 mt-3">
@@ -20,9 +22,10 @@
                 <b>{{ book.category.title }}</b>
 
                 <p>
-                    {{ book.description }}
+                    {{ book.description|truncatechars:100 }}
                 </p>
                 
+                <a href="{% url 'add_to_favorite' book.slug %}" class="btn">Add To Favorites</a>
                 
             </div>
            

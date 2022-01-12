@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Blog Detail Page{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mb-4 justify-content-center">
+
+            <div class="col-6">
+                <h1 class='ms-5'>{{book.name}}</h1>
+                <p class='ms-5  text-muted fst-italic'>
+                    {{book.created_at}} by <b>{{book.author}}</b>
+                </p>
+                <h4 class='ms-5'>
+                    Overall Rating: {{book.get_rating|floatformat:1}}
+                    <span>
+                        {% if book.get_number_of_rating > 0 or book.get_number_of_reviews > 0 %}
+                            ({{book.get_number_of_rating}} ratings and {{book.get_number_of_reviews}} reviews)
+                            
+                        {% else %}
+                            (0 rating and 0 review)
+                        {% endif %}
+                    </span> 
+                </h4>
+                
+                <img src="{{book.cover.url}}" alt=""><br><br><br>
+                <p class='fs-4 me-5 '>{{book.description|linebreaksbr}}</p>
+                
+            </div>
+        </div>
+
+        
+
+            <div class="row mb-4 justify-content-center">
+                <div class="col-6 ">
+                    <form method="post" action="{% url 'reviews' book.slug %}">
+                        {% csrf_token %}
+
+                        {{ review_form | crispy }}
+
+                        <button class="btn btn-success">Add review</button>
+                    </form>
+
+                </div>
+                
+            </div> 
+
+            {% if book.bookreview_set.exists %}
+            <div class="row mb-3 justify-content-center">
+                <div class="col-6">
+                    <h2>Reviews</h2> <hr>
+
+                    {% for review in book.bookreview_set.all %}
+                        
+                            
+                            <div class="col-6">
+                                <img class="small-profile-pic" src="{{ review.user.profile_picture.url }}">
+                                <b class='ms-3'>{{ review.user.username }}</b>  rated it
+                                
+                                <input id="star-rating-1" name="star-rating-1" class="rating rating-loading" value="{{review.stars_given}}" data-min="0" data-max="5" data-step="0.5" data-size="xs">
+                                <span class="fw-lighter">on {{ review.created_at }}</span>
+                                {% if review.user == request.user %}
+                                    <a style='font-size: 20px' href="{% url 'edit_book_review' review.book.slug review.id %}"><i class="ms-3 bi bi-pencil-square"></i></a>
+                                    <a style='font-size: 20px' href="{% url 'confirm_delete_book_review' review.book.slug  review.id %}"><i class="me-1 bi bi-trash"></i></a>
+                                {% endif %}
+                                <p class="mt-2 font-monospace">{{ review.comment }}</p>
+                                    
+                            </div>
+                            <hr>
+
+                        
+                    {% endfor %}
+                    
+                </div>
+            {% endif %} 
+                
+            
+    </div>
+
+
+{% endblock content %}

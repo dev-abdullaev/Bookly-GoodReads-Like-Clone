@@ -1,9 +1,10 @@
 from django.contrib import admin
 
-from main_app.models import Blog, Category, Book, BookReview, Favorite
+from main_app.models import Blog, Category, Book, BookReview, Favorite, BlogComment
 
 
 admin.site.register(Favorite)
+admin.site.register(BlogComment)
 admin.site.register(BookReview)
 
 

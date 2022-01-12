@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Blog Detail Page{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+                <div class="col-md-7">
+                    <h1 class='ms-2'>{{blog.title}}</h1>
+                    <p class='ms-2 text-muted fst-italic'>{{blog.created_at}}
+                        by {{blog.owner.first_name}} {{blog.owner.last_name}}
+                       
+                    </p>
+                    <h4 class='ms-5'>
+                        Overall Rating: {{blog.get_rating|floatformat:1}}
+                        <span>
+                            {% if blog.get_number_of_rating > 0 or blog.get_number_of_reviews > 0 %}
+                                ({{blog.get_number_of_rating}} ratings and {{blog.get_number_of_reviews}} reviews)
+                                
+                            {% else %}
+                                (0 rating and 0 review)
+                            {% endif %}
+                        </span> 
+                    </h4>
+
+                    <img src="{{blog.picture.url}}" alt=""><br><br><br>
+                    <p class='fs-4'>{{blog.body|linebreaksbr}}</p>
+                    
+                </div>
+                
+                <div class="col-md-7">
+                    <hr>
+                    <h3>Leave your comments here</h3>
+                    <form action="{% url 'comments' blog.slug %}" method="post">
+                        {% csrf_token %}
+        
+                        {{ comment_form |crispy }}
+        
+                        <button class="btn btn-success">Add Comment</button><br><br>
+                    </form>
+        
+                </div>
+                <div class="col-md-7">
+                    {% if blog.blogcomment_set.exists %}<hr>
+                    <h2>Comments</h2> <br>
+
+                        {% for comment in blog.blogcomment_set.all %}
+                            <div class="row mb-3">
+                                <div class="col-1 me-5">
+                                    <img class="small-profile-pic" src="{{ comment.user.profile_picture.url }}">
+                                </div>
+                                <div class="col-10">
+                                        <b>{{ comment.user.username }}</b>
+                                        rated it <input id="star-rating-1" name="star-rating-1" class="rating rating-loading" value="{{comment.stars_given}}" data-min="0" data-max="5" data-step="0.5" data-size="xs">
+                                        <span class="fw-lighter">on {{ comment.created_at }}</span>
+                                        <p class="mt-2 font-monospace">{{ comment.comments }}
+                                            {% if comment.user == request.user %}
+                                                <a style='font-size: 20px' href="{% url 'edit_blog_comment' comment.blog.slug comment.id %}"><i class="ms-3 bi bi-pencil-square"></i></a>
+                                                <a style='font-size: 20px' href="{% url 'confirm_delete_blog_comment' comment.blog.slug  comment.id %}"><i class="me-1 bi bi-trash"></i></a>
+                                            {% endif %}
+                                        </p>
+                                </div>
+                                <hr>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+        </div>
+        
+
+    </div>
+
+
+{% endblock content %}

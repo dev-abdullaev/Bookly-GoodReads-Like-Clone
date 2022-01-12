@@ -9,7 +9,7 @@ from django.contrib import messages
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy("login")
-    template_name = "signup.html"
+    template_name = "registration/signup.html"
 
 
 class ProfileView(LoginRequiredMixin, View):

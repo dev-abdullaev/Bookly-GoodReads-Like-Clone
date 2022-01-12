@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        <form action="{% url 'delete_fav_book' book.slug favorite.id %}" method="post">{% csrf_token %}
+
+            <h4>Are you sure you want to delete <b>{{book.name}}</b>?</h4>
+            <a class="btn btn-warning" href="{% url 'favorite_books' %}">Cancel</a>
+            <button type="submit" class="btn ml-2" >Confirm</button>
+            
+        </form>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Book Detail Page{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-3">
+                <img class="cover-pic" alt="cover image" src="{{ book.cover.url }}">
+            </div>
+
+            <div class="col-6 ms-3">
+                <h3>{{ book.name }}</h3>
+
+                <p>
+                    {{ book.description|truncatechars:100 }}
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <p>{{book.description}}</p>
+                </div>
+                <a class="btn btn-primary" href="{% url 'read_book' book.slug %}">
+                    Read More
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
