@@ -1,10 +1,10 @@
 from django.utils import timezone
 from django.db import models
-from django.template.defaultfilters import capfirst, slugify
+from django.template.defaultfilters import slugify
 from users.models import CustomUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
-from django.db.models import Avg
+
 
 
 
@@ -75,6 +75,26 @@ class Blog(models.Model):
             return 0
 
 
+# class Author(models.Model):
+#     first_name = models.CharField(max_length=100)
+#     last_name = models.CharField(max_length=100)
+#     email = models.EmailField()
+#     bio = models.TextField()
+
+#     def __str__(self):
+#         return f"{self.first_name} {self.last_name}"
+
+#     def full_name(self):
+#         return f"{self.first_name} {self.last_name}"
+
+
+# class BookAuthor(models.Model):
+#     book = models.ForeignKey(Book, on_delete=models.CASCADE)
+#     author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return f"{self.book.name} by {self.author.first_name} {self.author.last_name}"
+
 
 class Book(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="books")
@@ -124,6 +144,7 @@ class Book(models.Model):
             return self.bookreview_set.all().count()
         else:
             return 0
+
 
 class BookReview(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

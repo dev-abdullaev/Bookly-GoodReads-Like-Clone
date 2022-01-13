@@ -98,7 +98,7 @@ class EditReviewView(LoginRequiredMixin, View):
 
         if review_form.is_valid():
             review_form.save()
-            return redirect(reverse("detail", kwargs={"slug": book.slug}))
+            return redirect(reverse("read_book", kwargs={"slug": book.slug}))
 
         return render(request, "book/review_update.html", {"book": book, 'review': review, "review_form": review_form})
 
