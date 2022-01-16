@@ -31,13 +31,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-
+    #Local Apps
     'users',
     'main_app',
+    'api',
 
-
+    #3rd Party Apps
     "crispy_forms",
     "crispy_bootstrap5",
+    "rest_framework",
+    'django_filters',
 ]
 
 
@@ -145,6 +148,11 @@ LOGIN_URL = "login"
 
 # django_heroku.settings(locals())
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3
+}
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

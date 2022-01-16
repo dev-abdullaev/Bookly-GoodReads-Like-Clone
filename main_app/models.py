@@ -40,6 +40,11 @@ class Blog(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
 
+    @property
+    def summary(self):
+        return self.body[:100]
+
+
     def __str__(self):
         return self.title
 
@@ -98,7 +103,6 @@ class Blog(models.Model):
 
 class Book(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="books")
-    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, unique=True)
     author = models.CharField(max_length=50)
     description = models.TextField()
@@ -109,6 +113,11 @@ class Book(models.Model):
     is_active = models.BooleanField(default=True)
     is_new = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now)
+
+
+    @property
+    def summary(self):
+        return self.description[:100]
 
 
     def get_absolute_url(self):
