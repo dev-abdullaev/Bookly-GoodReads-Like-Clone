@@ -9,9 +9,7 @@
 
 - avid reader.
 
-- **opensourcer**
-
-- bachelor of computer science
+- majoring is MIS
 
 
 <br />
