@@ -1,5 +1,5 @@
 Bookly
 
-Live Demo - zokhid.pythonanywhere.com/
+Live Demo - http://zokhid.pythonanywhere.com/
 
 
